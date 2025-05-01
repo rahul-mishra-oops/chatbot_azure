@@ -6,6 +6,15 @@ body {
     align-items: center;
     height: 100vh;
   }
+
+textarea,
+select,
+button {
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding doesn't break layout */
+  margin-bottom: 1rem;
+}
+
   
   .container {
     background: white;
