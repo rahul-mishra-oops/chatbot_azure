@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Azure TTS App</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Text to Speech</h2>
+    <label for="voice-select">Choose a voice:</label>
+    <select id="voice-select">
+      <!-- United States -->
+      <option value="en-US-JennyNeural">Jenny (US, Female)</option>
+      <option value="en-US-GuyNeural">Guy (US, Male)</option>
+
+      <!-- United Kingdom -->
+      <option value="en-GB-SoniaNeural">Sonia (UK, Female)</option>
+      <option value="en-GB-ThomasNeural">Thomas (UK, Male)</option>
+
+      <!-- India -->
+      <option value="en-IN-NeerjaNeural">Neerja (India, Female)</option>
+      <option value="en-IN-PrabhatNeural">Prabhat (India, Male)</option>
+
+      <!-- Australia -->
+      <option value="en-AU-NatashaNeural">Natasha (Australia, Female)</option>
+      <option value="en-AU-WilliamNeural">William (Australia, Male)</option>
+
+      <!-- Canada -->
+      <option value="en-CA-ClaraNeural">Clara (Canada, Female)</option>
+      <option value="en-CA-LiamNeural">Liam (Canada, Male)</option>
+
+      <!-- Spain -->
+      <option value="es-ES-ElviraNeural">Elvira (Spain, Female)</option>
+      <option value="es-ES-AlvaroNeural">Alvaro (Spain, Male)</option>
+
+      <!-- Mexico -->
+      <option value="es-MX-DaliaNeural">Dalia (Mexico, Female)</option>
+      <option value="es-MX-JorgeNeural">Jorge (Mexico, Male)</option>
+
+      <!-- France -->
+      <option value="fr-FR-DeniseNeural">Denise (France, Female)</option>
+      <option value="fr-FR-HenriNeural">Henri (France, Male)</option>
+
+      <!-- Germany -->
+      <option value="de-DE-KatjaNeural">Katja (Germany, Female)</option>
+      <option value="de-DE-ConradNeural">Conrad (Germany, Male)</option>
+
+      <!-- Italy -->
+      <option value="it-IT-ElsaNeural">Elsa (Italy, Female)</option>
+      <option value="it-IT-DiegoNeural">Diego (Italy, Male)</option>
+
+      <!-- Japan -->
+      <option value="ja-JP-NanamiNeural">Nanami (Japan, Female)</option>
+      <option value="ja-JP-KeitaNeural">Keita (Japan, Male)</option>
+
+      <!-- Korea -->
+      <option value="ko-KR-SunHiNeural">SunHi (Korea, Female)</option>
+      <option value="ko-KR-InJoonNeural">InJoon (Korea, Male)</option>
+
+      <!-- China -->
+      <option value="zh-CN-XiaoxiaoNeural">Xiaoxiao (China, Female)</option>
+      <option value="zh-CN-YunxiNeural">Yunxi (China, Male)</option>
+
+      <!-- Brazil -->
+      <option value="pt-BR-FranciscaNeural">Francisca (Brazil, Female)</option>
+      <option value="pt-BR-AntonioNeural">Antonio (Brazil, Male)</option>
+
+      <!-- Russia -->
+      <option value="ru-RU-SvetlanaNeural">Svetlana (Russia, Female)</option>
+      <option value="ru-RU-DmitryNeural">Dmitry (Russia, Male)</option>
+    </select>
+
+    <textarea id="text-input" placeholder="Enter text here..."></textarea>
+
+    <div class="btn-group">
+      <button onclick="startSpeech()">Start Speech</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
