@@ -1,54 +1,63 @@
-let synthesizer;
-document.body.addEventListener(
-  'touchstart',
-  () => {
-    const context = new (window.AudioContext || window.webkitAudioContext)();
-    context.resume().then(() => {
-      console.log("AudioContext resumed for iOS");
-    });
-  },
-  { once: true }
-);
+let audio = null;
+let controller = null; // Used to abort fetch
 
 function startSpeech() {
   const text = document.getElementById("text-input").value;
-  const selectedVoice = document.getElementById("voice-select").value;
+  const voice = document.getElementById("voice-select").value;
 
   if (!text.trim()) {
-    alert("Please enter some text.");
+    alert("Please enter text.");
     return;
   }
 
-  const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
-    "7K1h3E2sgsPmqjiX71IEzSirUgVhfIGntzpgLpR0cn3Mnj9dbpJ1JQQJ99BEACYeBjFXJ3w3AAAYACOGG0ed",
-    "eastus"
-  );
-  speechConfig.speechSynthesisVoiceName = selectedVoice;
-  speechConfig.speechSynthesisOutputFormat = SpeechSDK.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3;
+  const apiKey = "7K1h3E2sgsPmqjiX71IEzSirUgVhfIGntzpgLpR0cn3Mnj9dbpJ1JQQJ99BEACYeBjFXJ3w3AAAYACOGG0ed";
+  const region = "eastus";
+  const endpoint = `https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`;
 
-  const audioConfig = SpeechSDK.AudioConfig.fromDefaultSpeakerOutput();
-  synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, audioConfig);
+  const ssml = `
+    <speak version='1.0' xml:lang='en-US'>
+      <voice xml:lang='en-US' name='${voice}'>${text}</voice>
+    </speak>`;
 
-  synthesizer.speakTextAsync(
-    text,
-    result => {
-      if (result.reason === SpeechSDK.ResultReason.SynthesizingAudioCompleted) {
-        console.log("Speech synthesized successfully.");
-      } else {
-        console.error("Speech synthesis failed:", result.errorDetails);
-        alert("Error: " + result.errorDetails);
-      }
+  controller = new AbortController();
+
+  fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Ocp-Apim-Subscription-Key": apiKey,
+      "Content-Type": "application/ssml+xml",
+      "X-Microsoft-OutputFormat": "audio-16khz-32kbitrate-mono-mp3",
+      "User-Agent": "AzureTTSApp"
     },
-    error => {
-      console.error("Error during speech synthesis:", error);
-    }
-  );
+    body: ssml,
+    signal: controller.signal
+  })
+    .then(response => {
+      if (!response.ok) throw new Error("TTS failed: " + response.statusText);
+      return response.blob();
+    })
+    .then(audioBlob => {
+      const audioUrl = URL.createObjectURL(audioBlob);
+      audio = new Audio(audioUrl);
+      audio.play();
+    })
+    .catch(err => {
+      if (err.name === 'AbortError') {
+        console.log("Speech request aborted.");
+      } else {
+        alert("Error: " + err.message);
+        console.error(err);
+      }
+    });
 }
 
 function stopSpeech() {
-  if (synthesizer) {
-    synthesizer.close();
-    synthesizer = null;
-    console.log("Speech stopped.");
+  if (controller) {
+    controller.abort();
+    controller = null;
+  }
+  if (audio && !audio.paused) {
+    audio.pause();
+    audio.currentTime = 0;
   }
 }
