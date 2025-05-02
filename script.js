@@ -24,6 +24,7 @@ function startSpeech() {
     "eastus"
   );
   speechConfig.speechSynthesisVoiceName = selectedVoice;
+  speechConfig.speechSynthesisOutputFormat = SpeechSDK.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3;
 
   const audioConfig = SpeechSDK.AudioConfig.fromDefaultSpeakerOutput();
   synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, audioConfig);
