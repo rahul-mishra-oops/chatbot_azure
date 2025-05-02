@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Azure TTS App</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Azure TTS</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h2>Text to Speech</h2>
-    <label for="voice-select">Choose a voice:</label>
+    <h2>Azure Text-to-Speech</h2>
+    
+    <textarea id="text-input" placeholder="Type your text here..."></textarea>
+    
     <select id="voice-select">
       <!-- United States -->
       <option value="en-US-JennyNeural">Jenny (US, Female)</option>
@@ -67,17 +68,14 @@
       <!-- Brazil -->
       <option value="pt-BR-FranciscaNeural">Francisca (Brazil, Female)</option>
       <option value="pt-BR-AntonioNeural">Antonio (Brazil, Male)</option>
-
-      <!-- Russia -->
-      <option value="ru-RU-SvetlanaNeural">Svetlana (Russia, Female)</option>
-      <option value="ru-RU-DmitryNeural">Dmitry (Russia, Male)</option>
     </select>
 
-    <textarea id="text-input" placeholder="Enter text here..."></textarea>
-
     <div class="btn-group">
-      <button onclick="startSpeech()">Start Speech</button>
+      <button onclick="startSpeech()">Start</button>
+      <button onclick="stopSpeech()">Stop</button>
     </div>
+
+    <!-- <audio id="audio" controls style="display:none;"></audio> -->
   </div>
 
   <script src="script.js"></script>
