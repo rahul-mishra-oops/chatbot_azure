@@ -1,4 +1,14 @@
 let synthesizer;
+document.body.addEventListener(
+  'touchstart',
+  () => {
+    const context = new (window.AudioContext || window.webkitAudioContext)();
+    context.resume().then(() => {
+      console.log("AudioContext resumed for iOS");
+    });
+  },
+  { once: true }
+);
 
 function startSpeech() {
   const text = document.getElementById("text-input").value;
